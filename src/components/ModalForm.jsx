@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { X, User, Phone, ArrowRight, Video, GraduationCap } from "lucide-react";
 
 const GOOGLE_SHEET_URL =
-  "https://script.google.com/macros/s/AKfycbxuHywsi6W7nNGbP_HG6HxApWlz6wBop43CzoqeFcR3ucS0RUMcxrD0xvdge0ufR_2A/exec";
+  "https://script.google.com/macros/s/AKfycbzvyFhwPwrUddEjpMxgJSFNe8GSRZhkfCBl0xUq5OMtCyemcryvxOR5Qi9IqNGuqq-3/exec";
 const TELEGRAM_CHANNEL_URL = "https://t.me/devreadyuz";
 
 export const ModalForm = ({ isOpen, onClose, title, type }) => {
