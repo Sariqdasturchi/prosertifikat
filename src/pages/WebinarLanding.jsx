@@ -68,6 +68,7 @@ export const WebinarLanding = ({ onOpenModal }) => {
               <div className="absolute inset-x-0 bottom-0 top-2 flex items-end justify-center">
                 <img
                   src={Teachers}
+                  lazyload="true"
                   alt="Shohrux Tursunmurodov va Rasulberdi Nazarov"
                   className="w-full h-[120%] object-cover object-top scale-125 translate-y-6 filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)]"
                 />

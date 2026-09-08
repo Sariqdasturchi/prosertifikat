@@ -15,7 +15,6 @@ import {
 
 import Teachers from "../assets/teacher.png";
 
-
 export const CourseLanding = ({ onOpenModal }) => {
   return (
     <div className="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased pb-16 selection:bg-amber-500 selection:text-slate-950">
@@ -65,6 +64,7 @@ export const CourseLanding = ({ onOpenModal }) => {
               <div className="absolute inset-x-0 bottom-0 top-2 flex items-end justify-center">
                 <img
                   src={Teachers}
+                  lazyload="true"
                   alt="Shohrux Tursunmurodov va Rasulberdi Nazarov"
                   className="w-full h-[120%] object-cover object-top scale-125 translate-y-6 filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)]"
                 />
@@ -218,31 +218,43 @@ export const CourseLanding = ({ onOpenModal }) => {
           </div>
 
           {/* PRICING BLOCK */}
-          <div className="pt-4 border-t border-slate-800/80 space-y-3">
-            {/* Chegirma va Asl narx */}
-            <div className="flex items-center justify-center gap-3">
-              <span className="text-xs font-bold text-slate-500 line-through">
-                Kurs narxi: 800.000 so'm
-              </span>
-              <span className="px-2.5 py-0.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[11px] font-black rounded-full uppercase tracking-wider">
-                Tejamkor taklif
+          <div className="pt-4 border-t border-slate-800/80 space-y-3.5">
+            {/* Chegirma va Tejamkorlik haqida Aniq Banner */}
+            <div className="flex items-center justify-between bg-red-500/10 border border-red-500/20 px-3.5 py-1.5 rounded-xl">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-slate-400">
+                  Asl narxi:
+                </span>
+                <span className="text-sm font-extrabold text-slate-400 line-through decoration-red-500 decoration-2">
+                  800.000 so'm
+                </span>
+              </div>
+              <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/40 text-red-400 text-[10px] font-black rounded-lg uppercase tracking-wider animate-pulse">
+                330.000 so'm TEJAYSISZ!
               </span>
             </div>
 
-            {/* Asosiy Chegirma Narxi */}
-            <div className="text-3xl font-black text-amber-400 tracking-tight">
-              Chegirma narxda: 490.000{" "}
-              <span className="text-lg font-bold text-slate-300">so'm</span>
+            {/* Asosiy Chegirmali Narx */}
+            <div className="flex items-baseline justify-center gap-1.5 py-1">
+              <span className="text-xs uppercase font-extrabold tracking-wider text-slate-400">
+                Atigi:
+              </span>
+              <span className="text-4xl font-black text-amber-400 tracking-tight drop-shadow-md">
+                470.000
+              </span>
+              <span className="text-sm font-black text-slate-300 uppercase tracking-wide">
+                so'm
+              </span>
             </div>
 
-            {/* Talabalar uchun Asosiy Etiborni Tortuvchi Kunlik Narx Baneri */}
-            <div className="bg-linear-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 border border-amber-500/40 p-3 rounded-2xl shadow-lg shadow-amber-500/5">
-              <p className="text-xs sm:text-sm font-extrabold text-amber-200 leading-snug">
+            {/* Talabalar uchun Kunlik Narx Baneri */}
+            <div className="bg-linear-to-r from-amber-500/20 via-yellow-500/25 to-amber-500/20 border border-amber-500/40 p-3.5 rounded-2xl shadow-lg shadow-amber-500/10 relative overflow-hidden">
+              <p className="text-xs sm:text-sm font-black text-amber-200 leading-snug text-center">
                 ⚡ Kuniga atigi{" "}
-                <span className="text-white bg-amber-500/30 px-1.5 py-0.5 rounded border border-amber-400/40 font-black">
-                  11 ming so'm
+                <span className="text-slate-950 bg-amber-400 px-2 py-0.5 rounded-md font-black shadow-sm mx-0.5 inline-block">
+                  11.000 so'm
                 </span>{" "}
-                to'lab, Milliy Sertifikatni qo'lga kiriting!
+                evaziga Sertifikatni qo'lga kiriting!
               </p>
             </div>
           </div>
