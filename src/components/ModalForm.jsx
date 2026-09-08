@@ -3,7 +3,7 @@ import { X, User, Phone, ArrowRight, Video, GraduationCap } from "lucide-react";
 
 const GOOGLE_SHEET_URL =
   "https://script.google.com/macros/s/AKfycbzvyFhwPwrUddEjpMxgJSFNe8GSRZhkfCBl0xUq5OMtCyemcryvxOR5Qi9IqNGuqq-3/exec";
-const TELEGRAM_CHANNEL_URL = "https://t.me/devreadyuz";
+const TELEGRAM_CHANNEL_URL = "https://t.me/pro_sertifikat_kursi";
 
 export const ModalForm = ({ isOpen, onClose, title, type }) => {
   const [name, setName] = useState("");
