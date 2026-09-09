@@ -66,7 +66,7 @@ export const CourseLanding = ({ onOpenModal }) => {
                   src={Teachers}
                   lazyload="true"
                   alt="Shohrux Tursunmurodov va Rasulberdi Nazarov"
-                  className="w-full h-[120%] object-cover object-top scale-125 translate-y-6 filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)]"
+                  className="w-full h-[150%] object-cover object-top scale-110 translate-y-6 filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)]"
                 />
               </div>
 
@@ -230,7 +230,7 @@ export const CourseLanding = ({ onOpenModal }) => {
                 </span>
               </div>
               <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/40 text-red-400 text-[10px] font-black rounded-lg uppercase tracking-wider animate-pulse">
-                330.000 so'm TEJAYSISZ!
+                330.000 so'm TEJAYSIZ!
               </span>
             </div>
 
