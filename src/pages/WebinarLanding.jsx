@@ -70,7 +70,7 @@ export const WebinarLanding = ({ onOpenModal }) => {
                   src={Teachers}
                   lazyload="true"
                   alt="Shohrux Tursunmurodov va Rasulberdi Nazarov"
-                  className="w-full h-[150%] object-cover object-top scale-110 translate-y-6 filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)]"
+                  className="w-full h-[145%] md:h-[150%] object-cover object-top scale-110 translate-y-6 filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.9)]"
                 />
               </div>
 
