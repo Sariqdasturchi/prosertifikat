@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { X, User, Phone, ArrowRight, Video, GraduationCap, CheckCircle } from "lucide-react";
 
 const GOOGLE_SHEET_URL =
-  "https://script.google.com/macros/s/AKfycbzvhLVSRK9cbBlgvMsPghZQp5NP1lBQAOHBaHFPFDTrC6JPOqvR_Bva3qNdlcecF03V/exec";
+  "https://script.google.com/macros/s/AKfycby4FK4rytc4mmYnNjWkUFJDTNOoB__ubNLzthAnSEVMvVCXKmcDx4ZP4pTjEhgWw7n4/exec";
 const TELEGRAM_CHANNEL_URL = "https://t.me/pro_sertifikat_kursi";
 
 export const ModalForm = ({ isOpen, onClose, title, type }) => {
