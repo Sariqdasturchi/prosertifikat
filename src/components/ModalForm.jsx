@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, User, Phone, ArrowRight, Video, GraduationCap } from "lucide-react";
+import { X, User, Phone, ArrowRight, Video, GraduationCap, CheckCircle } from "lucide-react";
 
 const GOOGLE_SHEET_URL =
   "https://script.google.com/macros/s/AKfycbzvyFhwPwrUddEjpMxgJSFNe8GSRZhkfCBl0xUq5OMtCyemcryvxOR5Qi9IqNGuqq-3/exec";
@@ -10,6 +10,7 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
   const [phone, setPhone] = useState("+998 ");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   if (!isOpen) return null;
 
@@ -41,7 +42,6 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
         Icon: GraduationCap,
       };
 
-  // Telefon raqami kirishi va maskalash
   const handlePhoneChange = (e) => {
     let input = e.target.value;
 
@@ -65,10 +65,9 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Faqat telefon raqamining uzunligi tekshiriladi
     const digitsOnly = phone.replace(/\D/g, "");
 
-    if (digitsOnly.length !== 12) { // 998 + 9 ta raqam = 12 ta
+    if (digitsOnly.length !== 12) {
       setError("Telefon raqami noto'g'ri. +998 dan keyin 9 ta raqam bo'lishi shart.");
       return;
     }
@@ -92,13 +91,31 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
         body: formData.toString(),
       });
 
-      window.location.href = TELEGRAM_CHANNEL_URL;
+      if (isWebinar) {
+        // Webinar bo'lsa Telegram kanalga yo'naltiriladi
+        window.location.href = TELEGRAM_CHANNEL_URL;
+      } else {
+        // Kurs bo'lsa muloqot oynasida muvaffaqiyat xabari ko'rsatiladi
+        setIsSuccess(true);
+      }
     } catch (err) {
       console.error("Xatolik:", err);
-      window.location.href = TELEGRAM_CHANNEL_URL;
+      if (isWebinar) {
+        window.location.href = TELEGRAM_CHANNEL_URL;
+      } else {
+        setIsSuccess(true);
+      }
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleClose = () => {
+    setIsSuccess(false);
+    setName("");
+    setPhone("+998 ");
+    setError("");
+    onClose();
   };
 
   return (
@@ -106,104 +123,127 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
       <div className={`bg-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl border ${config.borderColor} text-slate-100`}>
         {/* Close Button */}
         <button
-          onClick={onClose}
+          onClick={handleClose}
           type="button"
-          className="absolute top-4 right-4 text-slate-400 hover:text-white bg-slate-800 p-2 rounded-full transition cursor-pointer border border-slate-700"
+          className="absolute top-4 right-4 text-slate-400 hover:text-white bg-slate-800 p-2 rounded-full transition cursor-pointer border border-slate-700 z-10"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Modal Header */}
-        <div className="text-center mb-5">
-          <span className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider mb-3 border ${config.badgeBg}`}>
-            <config.Icon className="w-3.5 h-3.5" />
-            {config.badge}
-          </span>
-          <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight leading-snug">
-            {config.titleText}
-          </h3>
-          <p className="text-xs text-slate-400 mt-2 font-medium leading-relaxed">
-            {config.subtitle}
-          </p>
-        </div>
-
-        {/* Narx Bloki (Faqat Kurs uchun) */}
-        {!isWebinar && (
-          <div className="mb-5 bg-slate-800/40 border border-slate-700/60 rounded-2xl p-3.5 text-center space-y-2">
-            <div className="flex items-baseline justify-center gap-1.5">
-              <span className="text-[11px] font-black tracking-wider text-slate-400 uppercase">
-                Atigi:
-              </span>
-              <span className="text-3xl font-black text-amber-400 tracking-tight">
-                470.000
-              </span>
-              <span className="text-xs font-black text-slate-300 uppercase">
-                so'm
-              </span>
+        {/* Kurs uchun Muvaffaqiyatli Ro'yxatdan O'tildi Xabari */}
+        {isSuccess ? (
+          <div className="text-center py-6 space-y-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-2">
+              <CheckCircle className="w-10 h-10" />
             </div>
-            
-            <div className="bg-amber-500/10 border border-amber-500/30 py-2 px-3 rounded-xl">
-              <p className="text-xs font-extrabold text-amber-200 leading-tight">
-                ⚡ Kuniga atigi{" "}
-                <span className="bg-amber-400 text-slate-950 px-1.5 py-0.5 rounded font-black text-[11px] inline-block mx-0.5">
-                  11.000 so'm
-                </span>{" "}
-                evaziga Sertifikatni qo'lga kiriting!
+            <h3 className="text-2xl font-black text-white uppercase tracking-tight">
+              Arizangiz qabul qilindi!
+            </h3>
+            <p className="text-sm text-slate-300 font-medium leading-relaxed">
+              Tashakkur! Menejerimiz tez orada ko'rsatilgan telefon raqamingiz orqali siz bilan bog'lanadi.
+            </p>
+            <button
+              onClick={handleClose}
+              className="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl transition border border-slate-700 uppercase tracking-wider text-xs"
+            >
+              Yopish
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* Modal Header */}
+            <div className="text-center mb-5">
+              <span className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider mb-3 border ${config.badgeBg}`}>
+                <config.Icon className="w-3.5 h-3.5" />
+                {config.badge}
+              </span>
+              <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight leading-snug">
+                {config.titleText}
+              </h3>
+              <p className="text-xs text-slate-400 mt-2 font-medium leading-relaxed">
+                {config.subtitle}
               </p>
             </div>
-          </div>
+
+            {/* Narx Bloki (Faqat Kurs uchun) */}
+            {!isWebinar && (
+              <div className="mb-5 bg-slate-800/40 border border-slate-700/60 rounded-2xl p-3.5 text-center space-y-2">
+                <div className="flex items-baseline justify-center gap-1.5">
+                  <span className="text-[11px] font-black tracking-wider text-slate-400 uppercase">
+                    Atigi:
+                  </span>
+                  <span className="text-3xl font-black text-amber-400 tracking-tight">
+                    470.000
+                  </span>
+                  <span className="text-xs font-black text-slate-300 uppercase">
+                    so'm
+                  </span>
+                </div>
+                
+                <div className="bg-amber-500/10 border border-amber-500/30 py-2 px-3 rounded-xl">
+                  <p className="text-xs font-extrabold text-amber-200 leading-tight">
+                    ⚡ Kuniga atigi{" "}
+                    <span className="bg-amber-400 text-slate-950 px-1.5 py-0.5 rounded font-black text-[11px] inline-block mx-0.5">
+                      11.000 so'm
+                    </span>{" "}
+                    evaziga Sertifikatni qo'lga kiriting!
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Validation Error Message */}
+            {error && (
+              <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-xs font-semibold text-center">
+                {error}
+              </div>
+            )}
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-extrabold text-slate-300 uppercase tracking-wider mb-1.5">
+                  Ism va Familiyangiz
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3.5 top-3.5 w-5 h-5 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Ism Familiya (ixtiyoriy)"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className={`w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 rounded-xl focus:ring-2 ${config.focusRing} focus:outline-none transition font-medium`}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-extrabold text-slate-300 uppercase tracking-wider mb-1.5">
+                  Telefon Raqamingiz *
+                </label>
+                <div className="relative">
+                  <Phone className="absolute left-3.5 top-3.5 w-5 h-5 text-slate-400" />
+                  <input
+                    type="tel"
+                    required
+                    value={phone}
+                    onChange={handlePhoneChange}
+                    className={`w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 rounded-xl focus:ring-2 ${config.focusRing} focus:outline-none transition font-medium tracking-wider`}
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full ${config.buttonBg} font-black py-4 rounded-xl shadow-xl ${config.shadow} active:scale-95 transition-all text-base uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 mt-2`}
+              >
+                {loading ? "Yuborilmoqda..." : config.buttonText}
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </form>
+          </>
         )}
-
-        {/* Validation Error Message (Faqat Telefon uchun) */}
-        {error && (
-          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-xs font-semibold text-center">
-            {error}
-          </div>
-        )}
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-extrabold text-slate-300 uppercase tracking-wider mb-1.5">
-              Ism va Familiyangiz
-            </label>
-            <div className="relative">
-              <User className="absolute left-3.5 top-3.5 w-5 h-5 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Ism Familiya (ixtiyoriy)"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className={`w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 rounded-xl focus:ring-2 ${config.focusRing} focus:outline-none transition font-medium`}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-extrabold text-slate-300 uppercase tracking-wider mb-1.5">
-              Telefon Raqamingiz *
-            </label>
-            <div className="relative">
-              <Phone className="absolute left-3.5 top-3.5 w-5 h-5 text-slate-400" />
-              <input
-                type="tel"
-                required
-                value={phone}
-                onChange={handlePhoneChange}
-                className={`w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 rounded-xl focus:ring-2 ${config.focusRing} focus:outline-none transition font-medium tracking-wider`}
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full ${config.buttonBg} font-black py-4 rounded-xl shadow-xl ${config.shadow} active:scale-95 transition-all text-base uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 mt-2`}
-          >
-            {loading ? "Yuborilmoqda..." : config.buttonText}
-            <ArrowRight className="w-5 h-5" />
-          </button>
-        </form>
       </div>
     </div>
   );
