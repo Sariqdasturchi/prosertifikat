@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { X, User, Phone, ArrowRight, Video, GraduationCap, CheckCircle } from "lucide-react";
 
 const GOOGLE_SHEET_URL =
-  "https://script.google.com/macros/s/AKfycbxwykhqriDJYjz_HOWoSO3CTCElXYAd0SqgvfTPF_MBr2US-gHjXBsnSu83tcclve-S/exec";
+  "https://script.google.com/macros/s/AKfycbzvhLVSRK9cbBlgvMsPghZQp5NP1lBQAOHBaHFPFDTrC6JPOqvR_Bva3qNdlcecF03V/exec";
 const TELEGRAM_CHANNEL_URL = "https://t.me/pro_sertifikat_kursi";
 
 export const ModalForm = ({ isOpen, onClose, title, type }) => {
@@ -75,12 +75,24 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
     setLoading(true);
     setError("");
 
+    // Dynamic Event ID va Event Name
+    const eventId = "evt_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
+    const eventName = isWebinar ? "CompleteRegistration" : "Lead";
+
+    // Frontend Browser Pixel Tracking
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", eventName, {}, { eventID: eventId });
+    }
+
     try {
       const formData = new URLSearchParams();
       formData.append("name", name.trim());
       formData.append("phone", phone);
       formData.append("type", type || "Landing Lead");
       formData.append("date", new Date().toLocaleString("uz-UZ"));
+      formData.append("eventId", eventId);
+      formData.append("eventName", eventName);
+      formData.append("sourceUrl", window.location.href);
 
       await fetch(GOOGLE_SHEET_URL, {
         method: "POST",
@@ -92,10 +104,8 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
       });
 
       if (isWebinar) {
-        // Webinar bo'lsa Telegram kanalga yo'naltiriladi
         window.location.href = TELEGRAM_CHANNEL_URL;
       } else {
-        // Kurs bo'lsa muloqot oynasida muvaffaqiyat xabari ko'rsatiladi
         setIsSuccess(true);
       }
     } catch (err) {
@@ -121,7 +131,6 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fadeIn">
       <div className={`bg-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl border ${config.borderColor} text-slate-100`}>
-        {/* Close Button */}
         <button
           onClick={handleClose}
           type="button"
@@ -130,7 +139,6 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
           <X className="w-5 h-5" />
         </button>
 
-        {/* Kurs uchun Muvaffaqiyatli Ro'yxatdan O'tildi Xabari */}
         {isSuccess ? (
           <div className="text-center py-6 space-y-4">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-2">
@@ -151,7 +159,6 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
           </div>
         ) : (
           <>
-            {/* Modal Header */}
             <div className="text-center mb-5">
               <span className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider mb-3 border ${config.badgeBg}`}>
                 <config.Icon className="w-3.5 h-3.5" />
@@ -165,7 +172,6 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
               </p>
             </div>
 
-            {/* Narx Bloki (Faqat Kurs uchun) */}
             {!isWebinar && (
               <div className="mb-5 bg-slate-800/40 border border-slate-700/60 rounded-2xl p-3.5 text-center space-y-2">
                 <div className="flex items-baseline justify-center gap-1.5">
@@ -192,14 +198,12 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
               </div>
             )}
 
-            {/* Validation Error Message */}
             {error && (
               <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-xs font-semibold text-center">
                 {error}
               </div>
             )}
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-extrabold text-slate-300 uppercase tracking-wider mb-1.5">
