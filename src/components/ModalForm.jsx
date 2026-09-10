@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, User, Phone, ArrowRight, Video, GraduationCap, CheckCircle, Send } from "lucide-react";
+import { X, User, Phone, ArrowRight, Video, GraduationCap, CheckCircle, Loader2 } from "lucide-react";
 
 const GOOGLE_SHEET_URL =
   "https://script.google.com/macros/s/AKfycby4FK4rytc4mmYnNjWkUFJDTNOoB__ubNLzthAnSEVMvVCXKmcDx4ZP4pTjEhgWw7n4/exec";
@@ -24,9 +24,9 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
         focusRing: "focus:ring-emerald-500 focus:border-emerald-500",
         buttonBg: "bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-slate-950",
         shadow: "shadow-emerald-500/20",
-        titleText: "Jonli efirda qatnashish uchun ro'yxatdan o'ting",
-        subtitle: "Efirga kirish va bepul o'quv materiallarini olish uchun ma'lumotlaringizni qoldiring",
-        buttonText: "JONLI EFIRGA A'ZO BO'LISH",
+        titleText: "Bepul Vebinar telegram kanalda bo'lib o'tadi.",
+        subtitle: "Kanalga qo'shiling",
+        buttonText: "TELEGRAM KANALGA O'TISH",
         Icon: Video,
       }
     : {
@@ -103,11 +103,18 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
         body: formData.toString(),
       });
 
-      // Muvaffaqiyatli yuborilgach, doimo success holatiga o'tkaziladi
-      setIsSuccess(true);
+      if (isWebinar) {
+        window.location.href = TELEGRAM_CHANNEL_URL;
+      } else {
+        setIsSuccess(true);
+      }
     } catch (err) {
       console.error("Xatolik:", err);
-      setIsSuccess(true);
+      if (isWebinar) {
+        window.location.href = TELEGRAM_CHANNEL_URL;
+      } else {
+        setIsSuccess(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -133,56 +140,42 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
         </button>
 
         {isSuccess ? (
-          isWebinar ? (
-            /* WEBINAR UCHUN MUVAFFAQIYAT EKRANI */
-            <div className="text-center py-4 space-y-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-1">
-                <CheckCircle className="w-10 h-10" />
-              </div>
-              
-              <h3 className="text-2xl font-black text-white uppercase tracking-tight">
-                Ro'yxatdan o'tdingiz!
-              </h3>
-              
-              <div className="bg-slate-800/80 border border-emerald-500/30 rounded-2xl p-4 text-left space-y-2">
-                <p className="text-xs font-black text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <Video className="w-4 h-4" /> Jonli efirda qatnashish uchun:
-                </p>
-                <p className="text-xs text-slate-300 font-medium leading-relaxed">
-                  Vebinar havolasi va bepul o'quv materiallari **Telegram kanalimizda** ulashiladi. Efirni o'tkazib yubormaslik uchun kanalga obuna bo'ling!
-                </p>
-              </div>
+          /* KURS UCHUN MUVAFFAQIYAT EKRANI */
+          <div className="text-center py-6 space-y-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 mb-2">
+              <CheckCircle className="w-10 h-10" />
+            </div>
+            <h3 className="text-2xl font-black text-white uppercase tracking-tight">
+              Arizangiz qabul qilindi!
+            </h3>
+            <p className="text-sm text-slate-300 font-medium leading-relaxed">
+              Tashakkur! Menejerimiz tez orada ko'rsatilgan telefon raqamingiz orqali siz bilan bog'lanadi.
+            </p>
 
-              <a
-                href={TELEGRAM_CHANNEL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-gradient-to-r from-sky-500 via-blue-500 to-sky-600 hover:from-sky-400 hover:to-blue-400 text-white font-black py-4 rounded-xl shadow-xl shadow-sky-500/20 active:scale-95 transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2 mt-2"
-              >
-                <Send className="w-5 h-5" />
-                TELEGRAM KANALGA OBUNA BO'LISH
-              </a>
-            </div>
-          ) : (
-            /* KURS UCHUN MUVAFFAQIYAT EKRANI */
-            <div className="text-center py-6 space-y-4">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 mb-2">
-                <CheckCircle className="w-10 h-10" />
-              </div>
-              <h3 className="text-2xl font-black text-white uppercase tracking-tight">
-                Arizangiz qabul qilindi!
-              </h3>
-              <p className="text-sm text-slate-300 font-medium leading-relaxed">
-                Tashakkur! Menejerimiz tez orada ko'rsatilgan telefon raqamingiz orqali siz bilan bog'lanadi.
+            {/* BIZ BILAN BOG'LANISH BÖLIMI */}
+            <div className="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-4 text-center space-y-1.5 mt-2">
+              <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+                Shoshilinch savollaringiz bormi?
               </p>
-              <button
-                onClick={handleClose}
-                className="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl transition border border-slate-700 uppercase tracking-wider text-xs"
-              >
-                Yopish
-              </button>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-sm text-slate-200 font-bold">Biz bilan bog'lanish:</span>
+                <a
+                  href="tel:+998945331844"
+                  className="inline-flex items-center gap-1.5 text-amber-400 hover:text-amber-300 font-black text-base transition hover:underline"
+                >
+                  <Phone className="w-4 h-4" />
+                  +998 94 533 18 44
+                </a>
+              </div>
             </div>
-          )
+
+            <button
+              onClick={handleClose}
+              className="mt-2 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl transition border border-slate-700 uppercase tracking-wider text-xs cursor-pointer"
+            >
+              Yopish
+            </button>
+          </div>
         ) : (
           /* FORMA QISMI */
           <>
@@ -269,8 +262,17 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
                 disabled={loading}
                 className={`w-full ${config.buttonBg} font-black py-4 rounded-xl shadow-xl ${config.shadow} active:scale-95 transition-all text-base uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 mt-2`}
               >
-                {loading ? "Yuborilmoqda..." : config.buttonText}
-                <ArrowRight className="w-5 h-5" />
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin text-slate-950" />
+                    <span>Kuting qo'shilyapsiz...</span>
+                  </>
+                ) : (
+                  <>
+                    {config.buttonText}
+                    <ArrowRight className="w-5 h-5" />
+                  </>
+                )}
               </button>
             </form>
           </>

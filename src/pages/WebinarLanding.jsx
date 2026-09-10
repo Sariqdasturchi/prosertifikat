@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Calendar, 
   Clock, 
   Award, 
   ShieldCheck, 
-  CheckCircle2, 
   GraduationCap, 
   Users, 
   ArrowRight, 
   Sparkles, 
   BookOpen, 
   Target, 
-  Flame, 
-  Check, 
   AlertCircle 
 } from 'lucide-react';
 
@@ -23,7 +20,7 @@ export const WebinarLanding = ({ onOpenModal }) => {
     <div className="min-h-screen bg-neutral-950 font-sans text-slate-100 antialiased selection:bg-amber-500 selection:text-black pb-16">
       
       {/* Dynamic Header Badge */}
-      <div className="sticky top-0 z-40  bg-linear-to-r from-amber-600 via-yellow-500 to-amber-600 text-slate-950 py-2.5 px-4 text-center font-extrabold text-xs sm:text-sm tracking-wide shadow-lg flex items-center justify-center gap-3">
+      <div className="sticky top-0 z-40 bg-linear-to-r from-amber-600 via-yellow-500 to-amber-600 text-slate-950 py-2.5 px-4 text-center font-extrabold text-xs sm:text-sm tracking-wide shadow-lg flex items-center justify-center gap-3">
         <div className="flex items-center gap-1.5 shrink-0">
           <Calendar className="w-4 h-4 animate-pulse" />
           <span>14-15 Sentabr</span>
@@ -38,7 +35,7 @@ export const WebinarLanding = ({ onOpenModal }) => {
       <div className="max-w-md mx-auto px-4 pt-6 space-y-8">
         
         {/* HERO SECTION */}
-        <section className="relative  bg-linear-to-b from-neutral-900 via-neutral-900 to-neutral-900/90 rounded-3xl p-6 sm:p-7 shadow-2xl border border-amber-500/20 text-center overflow-hidden">
+        <section className="relative bg-linear-to-b from-neutral-900 via-neutral-900 to-neutral-900/90 rounded-3xl p-6 sm:p-7 shadow-2xl border border-amber-500/20 text-center overflow-hidden">
           {/* Background Radial Glow */}
           <div className="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -46,12 +43,12 @@ export const WebinarLanding = ({ onOpenModal }) => {
           {/* Top Badge */}
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full mb-4">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-[11px] font-black uppercase tracking-widest text-amber-400">2 Kunlik Bepul Onlayn Vebinar</span> 
+            <span className="text-[14px] font-black uppercase tracking-widest text-amber-400">2 Kunlik Bepul Onlayn Vebinar</span> 
           </div>
 
           {/* Main Title & Subtitle */}
           <h1 className="text-2xl sm:text-3xl font-black leading-tight tracking-tight text-white uppercase">
-            Milliy Sertifikatga <span className="text-transparent bg-clip-text  bg-linear-to-r from-amber-300 via-yellow-400 to-amber-500">yuqori natija</span> olish uchun qanday tayyorlanish kerak? 
+            Milliy Sertifikatga <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-300 via-yellow-400 to-amber-500">yuqori natija</span> olish uchun qanday tayyorlanish kerak? 
           </h1>
           <p className="text-xs font-semibold text-neutral-300 mt-3 bg-neutral-800/80 border border-neutral-700/60 py-2.5 px-3.5 rounded-xl backdrop-blur-sm">
             14-15 sentabr kunlari bepul onlayn vebinarda bilib oling. 
@@ -59,7 +56,7 @@ export const WebinarLanding = ({ onOpenModal }) => {
 
           {/* TEACHERS PHOTO DISPLAY */}
           <div className="relative my-6 pt-2">
-            <div className="relative w-full h-80 mx-auto rounded-3xl  bg-linear-to-b from-amber-500/15 via-neutral-900 to-neutral-950 p-1 border border-amber-500/30 shadow-2xl overflow-hidden">
+            <div className="relative w-full h-80 mx-auto rounded-3xl bg-linear-to-b from-amber-500/15 via-neutral-900 to-neutral-950 p-1 border border-amber-500/30 shadow-2xl overflow-hidden">
               {/* Pattern Background */}
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-amber-500/20 via-transparent to-transparent" />
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-size-[20px_20px]" />
@@ -75,7 +72,7 @@ export const WebinarLanding = ({ onOpenModal }) => {
               </div>
 
               {/* Bottom Gradient Overlay */}
-              <div className="absolute inset-x-0 bottom-0 h-12  bg-linear-to-t from-neutral-950 to-transparent z-10 pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-12 bg-linear-to-t from-neutral-950 to-transparent z-10 pointer-events-none" />
             </div>
 
             {/* Badge */}
@@ -87,14 +84,20 @@ export const WebinarLanding = ({ onOpenModal }) => {
             </div>
           </div>
 
-          {/* CTA Button */}
-          <button
-            onClick={onOpenModal}
-            className="w-full mt-2  bg-linear-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-neutral-950 font-black py-4 rounded-2xl shadow-lg shadow-amber-500/20 text-base tracking-wider active:scale-[0.98] transition-all flex items-center justify-center gap-2 uppercase"
-          >
-            <span>VEBINARGA BEPUL YOZILISH</span> 
-            <ArrowRight className="w-5 h-5" />
-          </button>
+          {/* CTA Button 1 */}
+          <div className="space-y-2 mt-2">
+            <button
+              onClick={onOpenModal}
+              className="w-full bg-linear-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-neutral-950 font-black py-4 rounded-2xl shadow-lg shadow-amber-500/20 text-base tracking-wider active:scale-[0.98] transition-all flex items-center justify-center gap-2 uppercase cursor-pointer"
+            >
+              <span>VEBINARGA BEPUL YOZILISH</span> 
+              <ArrowRight className="w-5 h-5" />
+            </button>
+            <p className="text-[14px] font-semibold text-neutral-400 leading-tight">
+              Vebinar telegram kanalda bo'lib o'tadi. <br />
+              <span className="text-amber-400 font-bold">Kanalga qo'shiling ☝️</span>
+            </p>
+          </div>
         </section>
 
         {/* TEACHERS BIO SECTION */}
@@ -148,7 +151,7 @@ export const WebinarLanding = ({ onOpenModal }) => {
               </div>
               <div>
                 <h3 className="font-bold text-white text-sm">Imtihonga to'g'ri tayyorlanish</h3> 
-                <p className="text-xs text-neutral-300 mt-0.5">Vaqtni to'g mezonlar asosida taqsimlash va eng muhim mavzularga urg'u berish sirlari.</p>
+                <p className="text-xs text-neutral-300 mt-0.5">Vaqtni to'g'ri mezonlar asosida taqsimlash va eng muhim mavzularga urg'u berish sirlari.</p>
               </div>
             </div>
 
@@ -198,7 +201,7 @@ export const WebinarLanding = ({ onOpenModal }) => {
                 <Users className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-bold text-white text-sm">O'qituvchilar uchun <span className="text-[11px] font-normal text-neutral-400">(filolog, boshlang'ich sinf)</span></h3> 
+                <h3 className="font-bold text-white text-sm">O'qituvchilar uchun <span className="text-[14px] font-normal text-neutral-400">(filolog, boshlang'ich sinf)</span></h3> 
                 <p className="text-xs text-neutral-300 mt-1 leading-relaxed">
                   Sertifikatga ega bo'lib, belgilangan <span className="text-amber-400 font-bold">50% maosh ustamasiga</span> ega bo'lmoqchi bo'lganlar. 
                 </p>
@@ -208,7 +211,7 @@ export const WebinarLanding = ({ onOpenModal }) => {
         </section>
 
         {/* URGENCY / NEGA AYNAN HOZIR */}
-        <section className=" bg-linear-to-b from-amber-500/15 via-neutral-900 to-neutral-900 rounded-3xl p-6 shadow-xl border border-amber-500/30 text-center space-y-3 relative overflow-hidden">
+        <section className="bg-linear-to-b from-amber-500/15 via-neutral-900 to-neutral-900 rounded-3xl p-6 shadow-xl border border-amber-500/30 text-center space-y-3 relative overflow-hidden">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500/20 border border-amber-500/40 rounded-full text-amber-300 text-xs font-extrabold uppercase">
             <AlertCircle className="w-4 h-4 text-amber-400" />
             <span>Nega aynan hozir qatnashish kerak?</span> 
@@ -218,13 +221,20 @@ export const WebinarLanding = ({ onOpenModal }) => {
             Imtihon <span className="text-amber-400 font-black">24-26 oktyabrda</span> bo'lib o'tadi — tayyorgarlikni qanchalik erta boshlasangiz, natijangiz shunchalik yuqori bo'ladi. 
           </p>
 
-          <button
-            onClick={onOpenModal}
-            className="w-full mt-2  bg-linear-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-neutral-950 font-black py-4 rounded-2xl shadow-xl shadow-amber-500/20 text-base tracking-wider active:scale-[0.98] transition-all flex items-center justify-center gap-2 uppercase"
-          >
-            <span>WEBINARDA QATNASHISH</span> 
-            <ArrowRight className="w-5 h-5" />
-          </button>
+          {/* CTA Button 2 */}
+          <div className="space-y-2 mt-2">
+            <button
+              onClick={onOpenModal}
+              className="w-full bg-linear-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-neutral-950 font-black py-4 rounded-2xl shadow-xl shadow-amber-500/20 text-base tracking-wider active:scale-[0.98] transition-all flex items-center justify-center gap-2 uppercase cursor-pointer"
+            >
+              <span>WEBINARDA QATNASHISH</span> 
+              <ArrowRight className="w-5 h-5" />
+            </button>
+            <p className="text-[14px] font-semibold text-neutral-400 leading-tight">
+              Vebinar telegram kanalda bo'lib o'tadi. <br />
+              <span className="text-amber-400 font-bold">Kanalga qo'shiling ☝️</span>
+            </p>
+          </div>
         </section>
 
         {/* FINAL CTA SECTION */}
@@ -238,13 +248,20 @@ export const WebinarLanding = ({ onOpenModal }) => {
             </p>
           </div>
 
-          <button
-            onClick={onOpenModal}
-            className="w-full  bg-linear-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-neutral-950 font-black py-4 rounded-2xl shadow-xl shadow-amber-500/20 text-base tracking-wider active:scale-[0.98] transition-all flex items-center justify-center gap-2 uppercase"
-          >
-            <span>VEBINARGA YOZILISH</span> 
-            <ArrowRight className="w-5 h-5" />
-          </button>
+          {/* CTA Button 3 */}
+          <div className="space-y-2">
+            <button
+              onClick={onOpenModal}
+              className="w-full bg-linear-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-neutral-950 font-black py-4 rounded-2xl shadow-xl shadow-amber-500/20 text-base tracking-wider active:scale-[0.98] transition-all flex items-center justify-center gap-2 uppercase cursor-pointer"
+            >
+              <span>VEBINARGA YOZILISH</span> 
+              <ArrowRight className="w-5 h-5" />
+            </button>
+            <p className="text-[14px] font-semibold text-neutral-400 leading-tight">
+              Vebinar telegram kanalda bo'lib o'tadi. <br />
+              <span className="text-amber-400 font-bold">Kanalga qo'shiling ☝️</span>
+            </p>
+          </div>
         </section>
 
       </div>
