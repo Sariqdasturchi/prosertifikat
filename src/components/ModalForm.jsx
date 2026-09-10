@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, User, Phone, ArrowRight, Video, GraduationCap, CheckCircle } from "lucide-react";
+import { X, User, Phone, ArrowRight, Video, GraduationCap, CheckCircle, Send } from "lucide-react";
 
 const GOOGLE_SHEET_URL =
   "https://script.google.com/macros/s/AKfycby4FK4rytc4mmYnNjWkUFJDTNOoB__ubNLzthAnSEVMvVCXKmcDx4ZP4pTjEhgWw7n4/exec";
@@ -103,18 +103,11 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
         body: formData.toString(),
       });
 
-      if (isWebinar) {
-        window.location.href = TELEGRAM_CHANNEL_URL;
-      } else {
-        setIsSuccess(true);
-      }
+      // Muvaffaqiyatli yuborilgach, doimo success holatiga o'tkaziladi
+      setIsSuccess(true);
     } catch (err) {
       console.error("Xatolik:", err);
-      if (isWebinar) {
-        window.location.href = TELEGRAM_CHANNEL_URL;
-      } else {
-        setIsSuccess(true);
-      }
+      setIsSuccess(true);
     } finally {
       setLoading(false);
     }
@@ -140,24 +133,58 @@ export const ModalForm = ({ isOpen, onClose, title, type }) => {
         </button>
 
         {isSuccess ? (
-          <div className="text-center py-6 space-y-4">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-2">
-              <CheckCircle className="w-10 h-10" />
+          isWebinar ? (
+            /* WEBINAR UCHUN MUVAFFAQIYAT EKRANI */
+            <div className="text-center py-4 space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-1">
+                <CheckCircle className="w-10 h-10" />
+              </div>
+              
+              <h3 className="text-2xl font-black text-white uppercase tracking-tight">
+                Ro'yxatdan o'tdingiz!
+              </h3>
+              
+              <div className="bg-slate-800/80 border border-emerald-500/30 rounded-2xl p-4 text-left space-y-2">
+                <p className="text-xs font-black text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <Video className="w-4 h-4" /> Jonli efirda qatnashish uchun:
+                </p>
+                <p className="text-xs text-slate-300 font-medium leading-relaxed">
+                  Vebinar havolasi va bepul o'quv materiallari **Telegram kanalimizda** ulashiladi. Efirni o'tkazib yubormaslik uchun kanalga obuna bo'ling!
+                </p>
+              </div>
+
+              <a
+                href={TELEGRAM_CHANNEL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-gradient-to-r from-sky-500 via-blue-500 to-sky-600 hover:from-sky-400 hover:to-blue-400 text-white font-black py-4 rounded-xl shadow-xl shadow-sky-500/20 active:scale-95 transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2 mt-2"
+              >
+                <Send className="w-5 h-5" />
+                TELEGRAM KANALGA OBUNA BO'LISH
+              </a>
             </div>
-            <h3 className="text-2xl font-black text-white uppercase tracking-tight">
-              Arizangiz qabul qilindi!
-            </h3>
-            <p className="text-sm text-slate-300 font-medium leading-relaxed">
-              Tashakkur! Menejerimiz tez orada ko'rsatilgan telefon raqamingiz orqali siz bilan bog'lanadi.
-            </p>
-            <button
-              onClick={handleClose}
-              className="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl transition border border-slate-700 uppercase tracking-wider text-xs"
-            >
-              Yopish
-            </button>
-          </div>
+          ) : (
+            /* KURS UCHUN MUVAFFAQIYAT EKRANI */
+            <div className="text-center py-6 space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 mb-2">
+                <CheckCircle className="w-10 h-10" />
+              </div>
+              <h3 className="text-2xl font-black text-white uppercase tracking-tight">
+                Arizangiz qabul qilindi!
+              </h3>
+              <p className="text-sm text-slate-300 font-medium leading-relaxed">
+                Tashakkur! Menejerimiz tez orada ko'rsatilgan telefon raqamingiz orqali siz bilan bog'lanadi.
+              </p>
+              <button
+                onClick={handleClose}
+                className="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3.5 rounded-xl transition border border-slate-700 uppercase tracking-wider text-xs"
+              >
+                Yopish
+              </button>
+            </div>
+          )
         ) : (
+          /* FORMA QISMI */
           <>
             <div className="text-center mb-5">
               <span className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider mb-3 border ${config.badgeBg}`}>
