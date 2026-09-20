@@ -22,7 +22,7 @@ export const CourseLanding = ({ onOpenModal }) => {
       <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-amber-500/20 py-2.5 px-4 text-center">
         <div className="max-w-md mx-auto flex items-center justify-center gap-2 text-xs font-bold tracking-wide text-amber-300">
           <Calendar className="w-4 h-4 text-amber-400 shrink-0" />
-          <span>"PRO SERTIFIKAT" — Kurs boshlanishi: 17-sentabr</span>
+          <span>"PRO SERTIFIKAT"</span>
         </div>
       </header>
 
